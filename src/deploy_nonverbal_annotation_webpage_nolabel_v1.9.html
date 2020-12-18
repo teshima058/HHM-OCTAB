@@ -1997,14 +1997,14 @@ video::-webkit-media-controls {
         
         video.addEventListener("dblclick", videoFullscreen);
 
-        video_start_time = 1;
-        video_end_time = 11;
+        video_start_time = 0;
+        video_end_time = 1000;
         video_title = '';
         
         //uncomment this when deploying to mturk!!
         /*deploy_start*/
-        video_start_time = ${start_time};
-        video_end_time = ${end_time};
+        // video_start_time = ${start_time};
+        // video_end_time = ${end_time};
         //video_title = '${title}';
         video_title = ''; //don't allow title to be seen when deployed
         noMoreActionsStr = '';
@@ -2033,17 +2033,23 @@ video::-webkit-media-controls {
         }
         /*deploy_end*/
 
-        mySliderBar.min = 0 - Math.ceil((video_end_time-video_start_time) / 10.0);
-        mySliderBar.max = 0 + Math.ceil((video_end_time-video_start_time) / 10.0);
-        label_minus.innerHTML = mySliderBar.min.toString()+' sec';
-        label_plus.innerHTML = '+'+mySliderBar.max.toString()+' sec';
-        label_title.innerHTML += video_title;
-        if(video_title == ''){
-            label_title.style.display = "none";
-        }
-        else{
-            label_title.style.display = "";
-        }
+        var timer = setInterval(function() {
+            if( video.readyState > 0 ) {
+                video_end_time = video.duration;
+                mySliderBar.min = 0 - Math.ceil((video_end_time-video_start_time) / 10.0);
+                mySliderBar.max = 0 + Math.ceil((video_end_time-video_start_time) / 10.0);
+                label_minus.innerHTML = mySliderBar.min.toString()+' sec';
+                label_plus.innerHTML = '+'+mySliderBar.max.toString()+' sec';
+                label_title.innerHTML += video_title;
+                if(video_title == ''){
+                    label_title.style.display = "none";
+                }
+                else{
+                    label_title.style.display = "";
+                }
+                clearInterval(timer);
+            }
+        }, 300);
     } 
 
     function videoFullscreen(){

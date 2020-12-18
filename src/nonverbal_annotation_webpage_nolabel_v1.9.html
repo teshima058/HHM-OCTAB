@@ -107,7 +107,7 @@ h2 {
 }
 
 #movieControlArea {
-    margin-top: 90px;
+    margin-top: 10px;
     margin-left: 20px;
     width: 470px;
     height: 70px;
@@ -1996,7 +1996,7 @@ h2 {
         video.addEventListener("dblclick", videoFullscreen);
 
         video_start_time = 0;
-        video_end_time = 754;
+        // video_end_time = video.duration;
         video_title = '';
         
         //uncomment this when deploying to mturk!!
@@ -2030,18 +2030,23 @@ h2 {
             populateAnnotList('annotationSliderArea',analyzeStartTimesArr, analyzeEndTimesArr, analyzeTagsArr);
         }
         deploy_end*/
-
-        mySliderBar.min = 0 - Math.ceil((video_end_time-video_start_time) / 10.0);
-        mySliderBar.max = 0 + Math.ceil((video_end_time-video_start_time) / 10.0);
-        label_minus.innerHTML = mySliderBar.min.toString()+' sec';
-        label_plus.innerHTML = '+'+mySliderBar.max.toString()+' sec';
-        label_title.innerHTML += video_title;
-        if(video_title == ''){
-            label_title.style.display = "none";
-        }
-        else{
-            label_title.style.display = "";
-        }
+        var timer = setInterval(function() {
+            if( video.readyState > 0 ) {
+                video_end_time = video.duration;
+                mySliderBar.min = 0 - Math.ceil((video_end_time-video_start_time) / 10.0);
+                mySliderBar.max = 0 + Math.ceil((video_end_time-video_start_time) / 10.0);
+                label_minus.innerHTML = mySliderBar.min.toString()+' sec';
+                label_plus.innerHTML = '+'+mySliderBar.max.toString()+' sec';
+                label_title.innerHTML += video_title;
+                if(video_title == ''){
+                    label_title.style.display = "none";
+                }
+                else{
+                    label_title.style.display = "";
+                }
+                clearInterval(timer);
+            }
+        }, 300);
     } 
 
     function videoFullscreen(){
@@ -2674,7 +2679,7 @@ h2 {
                     onplay="movieControlPlay()" onpause="movieControlPause()" width=480 height=320 >
                 <source src="${video_url_mp4}" type="video/mp4" />
                 <source src="${video_url_webm}" type="video/webm" />
-                <source src="http://www.cs.cmu.edu/~dtroniak/nsh_shop_120.webm" type="video/webm" />
+                <source src="videos/Qzmt2wQMhYo_0.mp4" type="video/mp4" />
                 <source src="http://www.cs.cmu.edu/~dtroniak/test.webm" type="video/webm" />
                 <source src="file:///Users/troniak/Documents/cmu/siggraph/se-joon-asia/trial_08_quadratic.avi" type="video/avi" />
             </video>
@@ -2683,7 +2688,7 @@ h2 {
             </div>
         </div>
         
-        <div id="annotationSliderOuterArea">
+        <!-- <div id="annotationSliderOuterArea">
             <div id="annotationSliderArea">
             </div>
             </br>
@@ -2692,7 +2697,7 @@ h2 {
             </br>
             </br>
             </br>
-        </div>
+        </div> -->
         
     </div>
 
