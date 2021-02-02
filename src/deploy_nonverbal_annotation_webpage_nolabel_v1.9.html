@@ -1971,9 +1971,13 @@ video::-webkit-media-controls {
           "</table>"+
           "</ol>"+
           "<h4>Before getting start HIT, please watch the following sample videos which has already been annotated:</h4>"+
-          "<li> <a href='https://teshima058.github.io/VideoStorage/html/sample_video1.html' target='_blank'>Sample Video 1</a> </li>" + 
-          "<li> <a href='https://teshima058.github.io/VideoStorage/html/sample_video2.html' target='_blank'>Sample Video 2</a> </li>" + 
-          "<li> <a href='https://teshima058.github.io/VideoStorage/html/sample_video3.html' target='_blank'>Sample Video 3</a> </li>" + 
+          'You can check the gesture by pressing the "Play" button in the list on the right.'+
+          "<ul>"+
+            "<li> <a href='https://teshima058.github.io/VideoStorage/html/sample_video1.html' target='_blank'>Sample Video 1</a> </li>" + 
+            "<li> <a href='https://teshima058.github.io/VideoStorage/html/sample_video2.html' target='_blank'>Sample Video 2</a> </li>" + 
+            "<li> <a href='https://teshima058.github.io/VideoStorage/html/sample_video3.html' target='_blank'>Sample Video 3</a> </li>" + 
+          "</ul>"+
+          "These videos are annotated as 'number (gesture type)' for clarity, but actually please write only the number."+
           //   "<h4>Please watch this sample video before attempting the HIT:</h4>"+
         //   "(This video may not play on browsers other than Firefox.)"+
         //   "<video tabindex='0' id='master-video' onmouseup='movieControlSeeked()' width=720 height=480 controls>"+
@@ -2506,7 +2510,7 @@ video::-webkit-media-controls {
                 // Assumes the first three elements are start time, end time and tag, respectively.
                 annotEle.childNodes[0].value = startTimeText.value;
                 annotEle.childNodes[1].value = endTimeText.value;
-                annotEle.childNodes[2].value = window.prompt("Which gesture type is the selected period of the video? \n (1: Beat, 2: Deictic, 3: Iconic, 4: Metaphoric, 5: No-Gesture)\n Please use a number from 1 to 5.",annotEle.childNodes[2].value);
+                annotEle.childNodes[2].value = window.prompt("Which gesture type is the selected period of the video? \n (1: Beat, 2: Imagistic, 3: No-Gesture)\n Please enter a number from 1 to 3.",annotEle.childNodes[2].value);
                 //annotEle.childNodes[2].style="width: '+((annotEle.childNodes[2].value.length+1)*7)+'px; font-family:\"Courier New\"";
 
                 $("#slider_"+editAnnotID).val([startVal,endVal]);
@@ -2518,7 +2522,7 @@ video::-webkit-media-controls {
             if( isValidTimeSelection() == true ) {
                 annotCnt = annotCnt + 1;
                 annotID = "annot" + annotCnt;
-                var annotation_text = window.prompt("Which gesture type is the selected period of the video? \n (1: Beat, 2: Deictic, 3: Iconic, 4: Metaphoric, 5: No-Gesture)\n Please use a number from 1 to 5.","");
+                var annotation_text = window.prompt("Which gesture type is the selected period of the video? \n (1: Beat, 2: Imagistic, 3: No-Gesture)\n Please enter a number from 1 to 3.","");
                 newAnnotation(divName,annotID,startTimeText.value,endTimeText.value,annotation_text);
                 //newAnnotationSlider(annotID,startTimeText.value,endTimeText.value,annotation_text);
                 
