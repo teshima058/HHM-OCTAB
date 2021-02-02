@@ -5,7 +5,7 @@
 <style type="text/css">
 #pageContainer {
     width: 850px;
-    height: 1100px;
+    height: 2000px;
     margin: 10px;
 }
 
@@ -440,7 +440,7 @@ video::-webkit-media-controls {
 
     
 <head>
-    <title>Page Title</title>
+    <title>Gesture Type Annotation</title>
 </head>
 
 <body>
@@ -1948,38 +1948,37 @@ video::-webkit-media-controls {
         setInterval(function() {displayVideoCurrentTime();}, 1/FPS);
         setInterval(function() {checkAndPauseSelectionPlay();}, 1/FPS);
 
-        annotate_instructions = 
-          "<ul>"+
-          "<li><font color='red'><b>***  Currently, only the *Chrome* web-browser is supported  !!!</b></font></li>"+
-          "<li>FIRST-TIME TURKERS are encouraged to read our <a href='http://cs.cmu.edu/~dtroniak/hhm_instructions_interface.html' target='_blank'>interface how-to.</a></li>"+
-          "<li>Note: Consistently submitting high-quality work grants you access to higher-paying HITs!</li>"+
-          "<li>Goal: Denote as many ACTIONs as possible in the video provided.</li>"+
-          "<li>An ACTION is defined as a single UNAMBIGUOUS motion performed by the PRIMARY subject.</li>"+
-          "<li>Using the interface, annotate the PRECISE start- and end-timing of each ACTION</li>"+
-          "<li>Acceptable work contains at least FIVE clear ACTION annotations with PRECISE start- and end-timing.</li>"+
-          "<li>BONUS pay (equivalent to the HIT reward) is awarded for every FIVE ADDITIONAL ACCEPTABLE annotations.</li>"+
-          "<li>Note: you can annotate FASTER by learning the keyboard hotkeys!!!</li>"+
-          "</ul>"+
-          "";
         compare_instructions = 
-          "<ul>"+
-          "<li><font color='red'><b>***  Currently, only the *Chrome* web-browser is supported  !!!</b></font></li>"+
-          "<li>FIRST-TIME TURKERS are encouraged to read our <a href='http://cs.cmu.edu/~dtroniak/hhm_instructions_interface.html' target='_blank'>interface how-to.</a></li>"+
-          "<li>Note: Consistently submitting high-quality work grants you access to higher-paying HITs!</li>"+
-          "<li>Goal: Denote as many ACTIONs as possible in the video provided that is similar to the MASTER-ACTION.</li>"+
-          "<li>Specify how similar your selection is to the MASTER-ACTION from 'Somewhat Similar' to 'Identical'.</li>"+
-          "<li>An ACTION is defined as a single UNAMBIGUOUS motion performed by the PRIMARY subject.</li>"+
-          "<li>Using the interface, select the PRECISE start- and end-timing of each ACTION</li>"+
-          "<li>Acceptable work contains at least FIVE clear ACTION selections with PRECISE start- and end-timing.</li>"+
-          "<li>BONUS pay (equivalent to the HIT reward) is awarded for every FIVE ADDITIONAL ACCEPTABLE annotations.</li>"+
-          "<li>Note: you can annotate FASTER by learning the keyboard hotkeys!!!</li>"+
+        "<ul>"+
+          "FIRST-TIME TURKERS are encouraged to read our <a href='http://cs.cmu.edu/~dtroniak/hhm_instructions_interface.html' target='_blank'>interface how-to</a>"+
+          " and read the description of gesture types below" + 
           "</ul>"+
-          "<h4>Please watch this MASTER-ACTION before attempting the HIT:</h4>"+
-          "<video tabindex='0' id='video' onmouseup='movieControlSeeked()' width=480 height=320 >"+
-            "<source src='${video_url_mp4_compare}' type='video/mp4' />"+
-            "<source src='${video_url_webm_compare}' type='video/webm' />"+
-            "<source src='http://www.cs.cmu.edu/~dtroniak/test.webm' type='video/webm' />"+
-          "</video>"+
+          "<h3>Goal: Split the gesture video by each gesture type</h3>"+
+          "Split the video by gesture type and annotate which gesture type the video is. (Please annotate with 3 types: Beat, Imagistic, No-Gesture)"+
+          "<ol>"+
+          "<h4> <li> Split the Gesture Video </li> </h4>"+
+          "Please split the video by gesture type. Gesture types are usually split after the hand position returns to the 'Rest position'. 'Rest position' means the position where the speakers put thier hands during they are not gesturing."+
+          "<br>※ Please annotate the time when speaker is speaking, even if the speaker is not gesturing. (That time should be annotated as 'No-Gesture')"+
+          "<h4> <li> Annotate the Video with Gesture Type </li> </h4>"+
+          " The definition of each gesture type is as follows."+
+          "<br><br>"+
+          "<table border>"+
+            "<tr> <td width=20> 1 </td> <td width=150> Beat         </td> <td> Gestures that have nothing to do with the content of the speech. The action of repeatedly shaking the arm according to the utterance. This gesture should appear most often.</td> </tr>"+
+            "<tr> <td width=20> 2 </td> <td width=150> Imagistic    </td> <td> Gestures to express something. This gesture type has something to do with the content of the speech. "+
+            "<br> For example, displaying an empty palm hand may indicate ‘presenting a problem’."+
+            " Rapid hand movement up and down may indicates the action of chopping ginger. </td> </tr>"+
+            "<tr> <td width=20> 3 </td> <td width=150> No-Gesture   </td> <td> State that keep talking, but their hands are not moving </td> </tr>"+
+          "</table>"+
+          "</ol>"+
+          "<h4>Before getting start HIT, please watch the following sample videos which has already been annotated:</h4>"+
+          "<li> <a href='https://teshima058.github.io/VideoStorage/html/sample_video1.html' target='_blank'>Sample Video 1</a> </li>" + 
+          "<li> <a href='https://teshima058.github.io/VideoStorage/html/sample_video2.html' target='_blank'>Sample Video 2</a> </li>" + 
+          "<li> <a href='https://teshima058.github.io/VideoStorage/html/sample_video3.html' target='_blank'>Sample Video 3</a> </li>" + 
+          //   "<h4>Please watch this sample video before attempting the HIT:</h4>"+
+        //   "(This video may not play on browsers other than Firefox.)"+
+        //   "<video tabindex='0' id='master-video' onmouseup='movieControlSeeked()' width=720 height=480 controls>"+
+        //     "<source src='https://teshima058.github.io/VideoStorage/instruction.mp4' type='video/mp4' />"+
+        //   "</video>"+
           "";
         
         instructionList.innerHTML = compare_instructions
@@ -2353,7 +2352,31 @@ video::-webkit-media-controls {
         endTimeText.value = "";
     }
 
-   
+    function isOverlapTime(startTime, endTime) {
+        var startTimeList = [];
+        var endTimeList = [];
+        annotArea = document.getElementById("annotationListInnerArea");
+        annots = annotArea.childNodes;
+        for (let i = 11; i < annots.length; i++){
+            annot = document.getElementById(annots[i].id).childNodes;
+            startTimeList.push(annot[0].value);
+            endTimeList.push(annot[1].value);
+        }
+
+        for (let i = 0; i < startTimeList.length; i++){
+            if (startTime > startTimeList[i] && startTime < endTimeList[i]){
+                return true;
+            }
+            else if (endTime > startTimeList[i] && endTime < endTimeList[i]) {
+                return true;
+            }
+            else if (startTime < startTimeList[i] && endTime > endTimeList[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     function isValidTimeSelection() {
         var startTime = -1;
         var endTime = -1;
@@ -2375,7 +2398,12 @@ video::-webkit-media-controls {
         }
         
         if( startTime <= endTime ) {
-            return true;
+            if (isOverlapTime(startTime, endTime)) {
+                alert("It overlaps with the time already annotated.");
+                return false;
+            }
+            else
+                return true;
         }
         else {
             alert("The start time should come before the end time.");
@@ -2478,7 +2506,7 @@ video::-webkit-media-controls {
                 // Assumes the first three elements are start time, end time and tag, respectively.
                 annotEle.childNodes[0].value = startTimeText.value;
                 annotEle.childNodes[1].value = endTimeText.value;
-                annotEle.childNodes[2].value = window.prompt("Please enter a tag for this ACTION",annotEle.childNodes[2].value);
+                annotEle.childNodes[2].value = window.prompt("Which gesture type is the selected period of the video? \n (1: Beat, 2: Deictic, 3: Iconic, 4: Metaphoric, 5: No-Gesture)\n Please use a number from 1 to 5.",annotEle.childNodes[2].value);
                 //annotEle.childNodes[2].style="width: '+((annotEle.childNodes[2].value.length+1)*7)+'px; font-family:\"Courier New\"";
 
                 $("#slider_"+editAnnotID).val([startVal,endVal]);
@@ -2490,7 +2518,7 @@ video::-webkit-media-controls {
             if( isValidTimeSelection() == true ) {
                 annotCnt = annotCnt + 1;
                 annotID = "annot" + annotCnt;
-                var annotation_text = window.prompt("Please enter a tag for this ACTION","");
+                var annotation_text = window.prompt("Which gesture type is the selected period of the video? \n (1: Beat, 2: Deictic, 3: Iconic, 4: Metaphoric, 5: No-Gesture)\n Please use a number from 1 to 5.","");
                 newAnnotation(divName,annotID,startTimeText.value,endTimeText.value,annotation_text);
                 //newAnnotationSlider(annotID,startTimeText.value,endTimeText.value,annotation_text);
                 
@@ -2609,7 +2637,7 @@ video::-webkit-media-controls {
     function hideShowInstructions() {
         if( toggleIsHideInst == true ) {
             instructionsElement.style.display = "";
-            pageContainer.style.height = "1100";
+            pageContainer.style.height = "2000";
             toggleIsHideInst = false;
         }
         else {
@@ -2725,12 +2753,12 @@ video::-webkit-media-controls {
             <input id="sliderBar" class="sliderBar" type="range" min="-3.0" max="3.0" value="0" step=".04" onchange="adjustVideoWithSlider()">
             <label id="labelPlus" class="sliderLabels">+10%</label>
         </div>        
-        <input id="b_gotoStart" value="|<< S" onclick="gotoStart()" type="button">
-        <input id="b_backwardOneSec" class="movieControls" value="<< 1s" onclick="moveCurrentTime('backward', 'second', 1, false)" type="button">
-        <input id="b_backwardOneFrame" class="movieControls" value="<| 1f" onclick="moveCurrentTime('backward', 'frame', 1, false)" type="button">
-        <input id="b_forwardOneFrame" class="movieControls" value="1f |>" onclick="moveCurrentTime('forward', 'frame', 1, false)" type="button">
-        <input id="b_forewardOneSec" class="movieControls" value="1s >>" onclick="moveCurrentTime('foreward', 'second', 1, false)" type="button">
-        <input id="b_gotoEnd" value="E >>|" onclick="gotoEnd()" type="button">
+        <input id="b_gotoStart" value="|<< S" onclick="gotoStart()" type="button" style="width: 11%">
+        <input id="b_backwardOneSec" class="movieControls" value="<< 1s" onclick="moveCurrentTime('backward', 'second', 1, false)" type="button" style="width: 11%">
+        <input id="b_backwardOneFrame" class="movieControls" value="<| 1f" onclick="moveCurrentTime('backward', 'frame', 1, false)" type="button" style="width: 11%">
+        <input id="b_forwardOneFrame" class="movieControls" value="1f |>" onclick="moveCurrentTime('forward', 'frame', 1, false)" type="button" style="width: 11%">
+        <input id="b_forewardOneSec" class="movieControls" value="1s >>" onclick="moveCurrentTime('foreward', 'second', 1, false)" type="button" style="width: 11%">
+        <input id="b_gotoEnd" value="E >>|" onclick="gotoEnd()" type="button" style="width: 11%">
         
         <!-- HACK: use disabled buttons for labels (to fix)-->
         <!--
