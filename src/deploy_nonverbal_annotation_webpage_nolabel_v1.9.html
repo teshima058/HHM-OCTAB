@@ -231,6 +231,23 @@ video::-webkit-media-controls {
     float: left;
 }
 
+#b_radio {                                          
+    flex-direction: column;                                                       
+    display: inline-flex;                                                         
+}  
+
+#b_radio label {
+    color: rgb(128, 128, 128);
+}
+#b_radio label:hover
+{
+    color: rgb(0, 0, 0);
+}
+#b_radio input[type="radio"]:checked + label {
+    color: #000;
+    border: 3px solid #000;
+}
+
 #b_annotate {
     width: 130px;
     height: 50px;
@@ -2087,9 +2104,9 @@ video::-webkit-media-controls {
             case 190: // "." key input
                 moveCurrentTime('forward', 'frame', 1, false);
                 break;
-            case 65: // "a" key input
-                annotateOrUpdate('annotationListInnerArea');
-                break;
+            // case 65: // "a" key input
+            //     annotateOrUpdate('annotationListInnerArea');
+            //     break;
             case 69: // "e" key input
                 setEndTimeText();
                 break;
@@ -2501,7 +2518,7 @@ video::-webkit-media-controls {
         },true).attr('disabled', 'disabled');*/
     }
     
-    function annotateOrUpdate(divName) {
+    function annotateOrUpdate(divName, type) {
         if( annotEditMode == true ) {
             if( isValidTimeSelection() == true ) {
                 var annotEle = document.getElementById(editAnnotID);
@@ -2512,7 +2529,8 @@ video::-webkit-media-controls {
                 // Assumes the first three elements are start time, end time and tag, respectively.
                 annotEle.childNodes[0].value = startTimeText.value;
                 annotEle.childNodes[1].value = endTimeText.value;
-                annotEle.childNodes[2].value = window.prompt("Which gesture type is the selected period of the video? \n (1: Beat, 2: Imagistic, 3: No-Gesture)\n Please enter a number from 1 to 3.",annotEle.childNodes[2].value);
+                annotEle.childNodes[2].value = type;
+                // annotEle.childNodes[2].value = window.prompt("Which gesture type is the selected period of the video? \n (1: Beat, 2: Imagistic, 3: No-Gesture)\n Please enter a number from 1 to 3.",annotEle.childNodes[2].value);
                 //annotEle.childNodes[2].style="width: '+((annotEle.childNodes[2].value.length+1)*7)+'px; font-family:\"Courier New\"";
 
                 $("#slider_"+editAnnotID).val([startVal,endVal]);
@@ -2524,7 +2542,8 @@ video::-webkit-media-controls {
             if( isValidTimeSelection() == true ) {
                 annotCnt = annotCnt + 1;
                 annotID = "annot" + annotCnt;
-                var annotation_text = window.prompt("Which gesture type is the selected period of the video? \n (1: Beat, 2: Imagistic, 3: No-Gesture)\n Please enter a number from 1 to 3.","");
+                // var annotation_text = window.prompt("Which gesture type is the selected period of the video? \n (1: Beat, 2: Imagistic, 3: No-Gesture)\n Please enter a number from 1 to 3.","");
+                var annotation_text = type;
                 newAnnotation(divName,annotID,startTimeText.value,endTimeText.value,annotation_text);
                 //newAnnotationSlider(annotID,startTimeText.value,endTimeText.value,annotation_text);
                 
@@ -2573,7 +2592,7 @@ video::-webkit-media-controls {
         clearSetEndTimeText();
         
         // Change the button text and layout in the annotation buttom area.
-        document.getElementById("b_annotate").value = "Annotate";
+        // document.getElementById("b_annotate").value = "Annotate";
         document.getElementById("b_cancel").style.visibility = "hidden";
     }
     
@@ -2603,7 +2622,7 @@ video::-webkit-media-controls {
 
         
         // Change the button text and layout in the annotation buttom area.
-        document.getElementById("b_annotate").value = "Update";
+        // document.getElementById("b_annotate").value = "Update";
         document.getElementById("b_cancel").style.visibility = "visible";
     }
     
@@ -2678,7 +2697,15 @@ video::-webkit-media-controls {
     function resetSliderPosition() {
         mySliderBar.value = 0;
     }
-    
+
+    function checkRadioButton(type) {
+        annotateOrUpdate('annotationListInnerArea', type);
+        for (i=1; i<4; i++) document.getElementById('b_radio') .elements["radio"+i].checked = false;
+    }
+
+    function callCheckRadioButton(type){
+        setTimeout("checkRadioButton('"+type+"')", 100);
+    }
    
     // Different ways of calling the init() function for IE or Firefox
     var browserName=navigator.appName;
@@ -2806,7 +2833,18 @@ video::-webkit-media-controls {
         </div>
 
         <div id="annotateButtonArea">
-            <input id="b_annotate" value="Annotate" onclick="annotateOrUpdate('annotationListInnerArea')" type="button">
+            <form id="b_radio">
+                <label>
+                    <input type="radio" name="radio1" value=1, onclick="callCheckRadioButton('Beat')"> Beat
+                </label>
+                <label>
+                    <input type="radio" name="radio2" value=2, onclick="callCheckRadioButton('Imagistic')"> Imagistic
+                </label>
+                <label>
+                    <input type="radio" name="radio3" value=3, onclick="callCheckRadioButton('No-Gesture')"> No-Gesture
+                </label> 
+            </form>
+            <!-- <input id="b_annotate" value="Annotate" onclick="annotateOrUpdate('annotationListInnerArea')" type="button"> -->
             <input id="b_cancel" style="visibility:hidden" value="Cancel" onclick="exitUpdateMode()" type="button">
         </div>
     </div>
