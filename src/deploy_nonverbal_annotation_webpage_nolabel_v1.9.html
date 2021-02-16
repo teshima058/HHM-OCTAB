@@ -2702,7 +2702,11 @@ video::-webkit-media-controls {
 
     function checkRadioButton(type) {
         annotateOrUpdate('annotationListInnerArea', type);
-        for (i=1; i<4; i++) document.getElementById('b_radio') .elements["radio"+i].checked = false;
+        // for (i=1; i<4; i++) document.getElementById('b_radio').elements["radio"+i].checked = false;
+        // document.getElementById('b_radio1').elements["radio"+i].checked = false;
+        document.getElementById('b_radio1').childNodes[1].checked = false;
+        document.getElementById('b_radio2').childNodes[1].checked = false;
+        document.getElementById('b_radio3').childNodes[1].checked = false;
     }
 
     function callCheckRadioButton(type){
@@ -2837,19 +2841,19 @@ video::-webkit-media-controls {
         <div id="annotateButtonArea">
             <form id="b_radio">
                 <div>
-                    <label>
+                    <label id="b_radio1">
                         <input type="radio" name="radio1" value=1, onclick="callCheckRadioButton('Beat')"> Beat
                     </label>
                 </div>
                 <div>
-                <label>
-                    <input type="radio" name="radio2" value=2, onclick="callCheckRadioButton('Imagistic')"> Imagistic
-                </label>
+                    <label id="b_radio2">
+                        <input type="radio" name="radio2" value=2, onclick="callCheckRadioButton('Imagistic')"> Imagistic
+                    </label>
                 </div>
                 <div>
-                <label>
-                    <input type="radio" name="radio3" value=3, onclick="callCheckRadioButton('No-Gesture')"> No-Gesture
-                </label> 
+                    <label id="b_radio3">
+                        <input type="radio" name="radio3" value=3, onclick="callCheckRadioButton('No-Gesture')"> No-Gesture
+                    </label> 
                 </div>
             </form>
             <!-- <input id="b_annotate" value="Annotate" onclick="annotateOrUpdate('annotationListInnerArea')" type="button"> -->
