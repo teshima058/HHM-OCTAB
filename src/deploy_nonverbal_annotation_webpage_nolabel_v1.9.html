@@ -5,7 +5,8 @@
 <style type="text/css">
 #pageContainer {
     width: 850px;
-    height: 2000px;
+    /* height: 2000px; */
+    height: 650px;
     margin: 10px;
 }
 
@@ -1932,7 +1933,7 @@ video::-webkit-media-controls {
     var instructionsElement;
     var pageContainger;
     var toggleIsPlay = false;
-    var toggleIsHideInst = false;
+    var toggleIsHideInst = true;
     var FPS = 25; // also change the slider bar granularity
     var EPSILON = 0.0001;
     var toggleIsPlayingSelection = false;
@@ -1954,6 +1955,7 @@ video::-webkit-media-controls {
         endTimeText = document.getElementById("t_endTimeText");
         currentTimeText = document.getElementById("t_currentTimeText");
         instructionsElement = document.getElementById("instructionsImg");
+        instructionsElement.style.display = "none";
         instructionList = document.getElementById("instructionLst");
         pageContainer = document.getElementById("pageContainer");
         mySliderBar = document.getElementById("sliderBar");
@@ -2723,13 +2725,13 @@ video::-webkit-media-controls {
 
 <div id="pageContainer">
     <div id="instructions">
-        <input id="b_hideShowInstructions" class="hideShowInstructionsButton" value="Hide/Show Instructions" onclick="hideShowInstructions()" type="button">
+        <input id="b_hideShowInstructions" class="hideShowInstructionsButton" value="Show/Hide Instructions" onclick="hideShowInstructions()" type="button">
         </br>
         <div id="instructionsImg" >
           <h2>Task Instructions</h2> 
           <div id="instructionLst"></div> </div>
           </br>
-          <input id="b_hideShowInstructions" class="hideShowInstructionsButton" value="Hide/Show Instructions" onclick="hideShowInstructions()" type="button">
+          <input id="b_hideShowInstructions" class="hideShowInstructionsButton" value="Show/Hide Instructions" onclick="hideShowInstructions()" type="button">
         <div id="label-container" class="label-container">
             <label id="label_title" class="videoLabels">Description: </label>
         </div>
@@ -2834,15 +2836,21 @@ video::-webkit-media-controls {
 
         <div id="annotateButtonArea">
             <form id="b_radio">
-                <label>
-                    <input type="radio" name="radio1" value=1, onclick="callCheckRadioButton('Beat')"> Beat
-                </label>
+                <div>
+                    <label>
+                        <input type="radio" name="radio1" value=1, onclick="callCheckRadioButton('Beat')"> Beat
+                    </label>
+                </div>
+                <div>
                 <label>
                     <input type="radio" name="radio2" value=2, onclick="callCheckRadioButton('Imagistic')"> Imagistic
                 </label>
+                </div>
+                <div>
                 <label>
                     <input type="radio" name="radio3" value=3, onclick="callCheckRadioButton('No-Gesture')"> No-Gesture
                 </label> 
+                </div>
             </form>
             <!-- <input id="b_annotate" value="Annotate" onclick="annotateOrUpdate('annotationListInnerArea')" type="button"> -->
             <input id="b_cancel" style="visibility:hidden" value="Cancel" onclick="exitUpdateMode()" type="button">
