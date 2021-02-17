@@ -2704,9 +2704,9 @@ video::-webkit-media-controls {
         annotateOrUpdate('annotationListInnerArea', type);
         // for (i=1; i<4; i++) document.getElementById('b_radio').elements["radio"+i].checked = false;
         // document.getElementById('b_radio1').elements["radio"+i].checked = false;
-        document.getElementById('b_radio1').childNodes[1].checked = false;
-        document.getElementById('b_radio2').childNodes[1].checked = false;
-        document.getElementById('b_radio3').childNodes[1].checked = false;
+        document.getElementById('b_radio1').checked = false;
+        document.getElementById('b_radio2').checked = false;
+        document.getElementById('b_radio3').checked = false;
     }
 
     function callCheckRadioButton(type){
@@ -2841,18 +2841,18 @@ video::-webkit-media-controls {
         <div id="annotateButtonArea">
             <form id="b_radio">
                 <div>
-                    <label id="b_radio1">
-                        <input type="radio" name="radio1" value=1, onclick="callCheckRadioButton('Beat')"> Beat
+                    <label>
+                        <input type="radio" id="b_radio1" value=1, onclick="callCheckRadioButton('Beat')"> Beat
                     </label>
                 </div>
                 <div>
-                    <label id="b_radio2">
-                        <input type="radio" name="radio2" value=2, onclick="callCheckRadioButton('Imagistic')"> Imagistic
+                    <label>
+                        <input type="radio" id="b_radio2" value=2, onclick="callCheckRadioButton('Imagistic')"> Imagistic
                     </label>
                 </div>
                 <div>
-                    <label id="b_radio3">
-                        <input type="radio" name="radio3" value=3, onclick="callCheckRadioButton('No-Gesture')"> No-Gesture
+                    <label>
+                        <input type="radio" id="b_radio3" value=3, onclick="callCheckRadioButton('No-Gesture')"> No-Gesture
                     </label> 
                 </div>
             </form>
