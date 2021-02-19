@@ -1,9 +1,9 @@
 import pandas as pd
 from bs4 import BeautifulSoup
 
-csv_path = "../data/result/Batch_4323641_batch_results.csv"
+csv_path = "../data/result/Batch_4335699_batch_results.csv"
 html_path = "./confirm_annotation.html"
-idx = 1
+idx = 0
 
 df = pd.read_csv(csv_path)
 soup = BeautifulSoup(open(html_path, encoding="utf-8"), "html.parser")

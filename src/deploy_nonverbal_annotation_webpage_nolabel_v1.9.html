@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<!-- <script src="https://assets.crowd.aws/crowd-html-elements.js"></script> -->
 <html>
     
 <style type="text/css">
@@ -1971,7 +1971,7 @@ video::-webkit-media-controls {
         "<ul>"+
           "Note: Consistently submitting high-quality work grants you access to higher-paying HITs! <br>"+
           "If you have any questions or want more HITs, please email to <a href='mailto:hit.teshima@gmail.com'>hit.teshima@gmail.com</a> <br>"+
-          "FIRST-TIME TURKERS are encouraged to read our <a href='http://cs.cmu.edu/~dtroniak/hhm_instructions_interface.html' target='_blank'>interface how-to</a>"+
+          "FIRST-TIME TURKERS are encouraged to read our <a href='https://teshima058.github.io/VideoStorage/html/hhm_instructions_interface.html' target='_blank'>interface how-to</a>"+
           " and read the description of gesture types below" + 
           "</ul>"+
           "<h3>Goal: Split the gesture video by each gesture type</h3>"+
@@ -2325,6 +2325,7 @@ video::-webkit-media-controls {
     //submit form to MTurk
     function submitForm(){
         //alert('submitting');
+        console.log(document.getElementById("submitButton"));
         document.getElementById("submitButton").click();
     }
 
@@ -2856,7 +2857,6 @@ video::-webkit-media-controls {
                     </label> 
                 </div>
             </form>
-            <!-- <input id="b_annotate" value="Annotate" onclick="annotateOrUpdate('annotationListInnerArea')" type="button"> -->
             <input id="b_cancel" style="visibility:hidden" value="Cancel" onclick="exitUpdateMode()" type="button">
         </div>
     </div>
