@@ -2523,6 +2523,10 @@ video::-webkit-media-controls {
     function annotateOrUpdate(divName, type) {
         if( annotEditMode == true ) {
             if( isValidTimeSelection() == true ) {
+                if (type == 'Imagistic'){
+                    words = window.prompt("What words do you think are represented as Imagistic gestures?\nPlease enter the words.");
+                    type = type + '(' + words + ')'
+                }
                 var annotEle = document.getElementById(editAnnotID);
                 
                 startVal = getBarValue(video_start_time+parseFloat(startTimeText.value),seek_bar.max);
@@ -2542,6 +2546,10 @@ video::-webkit-media-controls {
         }
         else {
             if( isValidTimeSelection() == true ) {
+                if (type == 'Imagistic'){
+                    words = window.prompt("What words do you think are represented as Imagistic gestures?\nPlease enter the words.");
+                    type = type + '(' + words + ')'
+                }
                 annotCnt = annotCnt + 1;
                 annotID = "annot" + annotCnt;
                 // var annotation_text = window.prompt("Which gesture type is the selected period of the video? \n (1: Beat, 2: Imagistic, 3: No-Gesture)\n Please enter a number from 1 to 3.","");
