@@ -13,16 +13,14 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    csv_path = "../data/result/Batch_4351495_batch_results.csv"
-    template_path = "./confirm_annotation_template.html"
-    save_dir = "./qualification_test/"
     vid_line = args.video_line
     annot_line = args.annot_line
 
+    # Load AMT Result CSV
     df = pd.read_csv(args.input_csv_path)
 
     for idx in range(len(df)):
-        
+        # Open template file
         with open(args.template_csv_path, 'r', encoding="utf_8") as f:
             lines = f.readlines()
 
@@ -31,14 +29,18 @@ if __name__ == '__main__':
         start = df['Answer.startTimeList'][idx].split('|')
         end = df['Answer.endTimeList'][idx].split('|')
 
-        fmt = '<div id="annot{i}"><input class="annotationTimeList" type="text" name="startTimeList" readonly="readonly" value="{start}"><input class="annotationTimeList" type="text" name="endTimeList" readonly="readonly" value="{end}"><input id="annotationText" class="annotationTimeList" rows="1" type="text" name="annotationText" value="{tag}" style="width: 200px; font-family:" courier="" new"=""><label>{i}</label><br><input value="|&lt;&lt; Start" onclick="gotoStartAnnot(&#39;annot{i}&#39;)" type="button" "=""><input value="Play" onclick="playSelection(&#39;annot{i}&#39;)" type="button" "=""><input value="Edit" onclick="editAnnotation(&#39;annotationListInnerArea&#39;, &#39;annot{i}&#39;)" type="button" "=""><input value="Delete" onclick="removeAnnotate(&#39;annotationListInnerArea&#39;, &#39;annot{i}&#39;)" type="button" "=""><input value="End &gt;&gt;|" onclick="gotoEndAnnot(&#39;annot{i}&#39;)" type="button" "=""><hr></div>'
-
+        # Replace video url
         lines[vid_line] = vid_url + '\n'
 
+        # Format for annotation
+        fmt = '<div id="annot{i}"><input class="annotationTimeList" type="text" name="startTimeList" readonly="readonly" value="{start}"><input class="annotationTimeList" type="text" name="endTimeList" readonly="readonly" value="{end}"><input id="annotationText" class="annotationTimeList" rows="1" type="text" name="annotationText" value="{tag}" style="width: 200px; font-family:" courier="" new"=""><label>{i}</label><br><input value="|&lt;&lt; Start" onclick="gotoStartAnnot(&#39;annot{i}&#39;)" type="button" "=""><input value="Play" onclick="playSelection(&#39;annot{i}&#39;)" type="button" "=""><input value="Edit" onclick="editAnnotation(&#39;annotationListInnerArea&#39;, &#39;annot{i}&#39;)" type="button" "=""><input value="Delete" onclick="removeAnnotate(&#39;annotationListInnerArea&#39;, &#39;annot{i}&#39;)" type="button" "=""><input value="End &gt;&gt;|" onclick="gotoEndAnnot(&#39;annot{i}&#39;)" type="button" "=""><hr></div>'
+
+        # Insert the line for annotation
         for i in range(1, len(tag)):
             annot_txt = fmt.format(i=i, tag=tag[i], start=start[i], end=end[i])
             lines.insert(annot_line + i, annot_txt+'\n')
 
+        # Save
         if not os.path.exists(args.save_dir):
             os.makedirs(args.save_dir)
         save_path = args.save_dir + os.path.basename(vid_url[:-4]) + '_' + df['WorkerId'][idx] + '.html'
