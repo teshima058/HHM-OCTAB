@@ -1969,8 +1969,7 @@ video::-webkit-media-controls {
 
         compare_instructions = 
         "<ul>"+
-          "Note: Consistently submitting high-quality work grants you access to higher-paying HITs! <br>"+
-          "If you have any questions or want more HITs, please email to <a href='mailto:hit.teshima@gmail.com'>hit.teshima@gmail.com</a> <br>"+
+
           "FIRST-TIME TURKERS are encouraged to read our <a href='https://teshima058.github.io/VideoStorage/html/hhm_instructions_interface.html' target='_blank'>interface how-to</a>"+
           " and read the description of gesture types below" + 
           "</ul>"+
@@ -1990,6 +1989,7 @@ video::-webkit-media-controls {
             " Rapid hand movement up and down may indicates the action of chopping ginger. </td> </tr>"+
             "<tr> <td width=20> 3 </td> <td width=150> No-Gesture   </td> <td> State that keep talking, but they are not gesturing. Here also include gestures that are neither Beat nor Imagistic. (For example, the action of operating the remote control while talking.) </td> </tr>"+
           "</table>"+
+          "When you select Imagistic, Please enter the words you think are represented as Imagistic gesture."+
           "</ol>"+
           "<h4>Before getting start HIT, please watch the following sample videos which has already been annotated:</h4>"+
           'You can check the gesture by pressing the "Play" button in the list on the right.'+
@@ -2136,11 +2136,11 @@ video::-webkit-media-controls {
             case 83: // "s" key input
                 setStartTimeText();
                 break;            
-            case 13: // "enter" key input
-                if(event.shiftKey == true){
-                    submitForm();
-                }
-                break;            
+            // case 13: // "enter" key input
+            //     if(event.shiftKey == true){
+            //         submitForm();
+            //     }
+            //     break;            
             case 27: // "esc" key input
                 videoFullscreen();
                 break;            
@@ -2878,7 +2878,7 @@ video::-webkit-media-controls {
         Set Start Time ==> s<br/>
         Set End Time ==> e<br/>
         <!-- Annotate&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;==> a<br/> -->
-        Submit&nbsp;==>&nbsp;shift-enter<br/>
+        <!-- Submit&nbsp;==>&nbsp;shift-enter<br/> -->
         <!--Fullscreen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;==>&nbsp;esc <br/>-->
     </div>
 
