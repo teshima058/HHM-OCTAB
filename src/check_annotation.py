@@ -5,9 +5,9 @@ import argparse
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='')
 
-    parser.add_argument('input_csv_path',   default="../data/result/Batch_4351495_batch_results.csv",   help='AMT result csv')
-    parser.add_argument('template_csv_path',default="./confirm_annotation_template.html",               help='Path to template html')
-    parser.add_argument('save_dir',         default="./qualification_test/",                            help='Path to save the video')
+    parser.add_argument('input_csv_path',   default="../data/result/Qualification_Test_2_GT.csv",   help='AMT result csv')
+    parser.add_argument('template_csv_path',default="./check_annotation_template.html",                 help='Path to template html')
+    parser.add_argument('save_dir',         default="./qualification_test_2_gt/",                            help='Path to save the video')
     parser.add_argument('--video_line',     default=2749,                                               help='Line to embed video URL in template HTML')
     parser.add_argument('--annot_line',     default=2779,                                               help='Line to embed annotation data in template HTML')
 
@@ -43,7 +43,7 @@ if __name__ == '__main__':
         # Save
         if not os.path.exists(args.save_dir):
             os.makedirs(args.save_dir)
-        save_path = args.save_dir + os.path.basename(vid_url[:-4]) + '_' + df['WorkerId'][idx] + '.html'
+        save_path = args.save_dir + df['WorkerId'][idx] + '_' + os.path.basename(vid_url[:-4]) + '.html'
         with open(save_path, 'wt', encoding="utf-8") as f:
             for ele in lines:
                 f.write(ele)
